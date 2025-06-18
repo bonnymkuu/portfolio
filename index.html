@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Glowing Glassmorphism Portfolio</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS Styles */
+        :root {
+            --pink-accent: #FF69B4; /* Deep Pink */
+            --navy-blue-accent: #000080; /* Navy Blue */
+            --glass-bg: rgba(255, 255, 255, 0.08); /* Semi-transparent white for glass effect */
+            --glass-border: rgba(255, 255, 255, 0.15); /* Slightly less transparent white for border */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Linear gradient background for the whole page */
+            background: linear-gradient(135deg, var(--navy-blue-accent) 0%, var(--pink-accent) 100%);
+            color: #E0E0E0; /* Light gray text for contrast */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            min-height: 100vh; /* Ensure full viewport height for gradient */
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        /* Text Selection Styles */
+        ::selection {
+            background: var(--pink-accent);
+            color: rgb(255, 255, 255);
+        }
+
+        /* Glassmorphism Effect */
+        .glassmorphism {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px); /* Blur effect */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            padding: 2rem;
+        }
+
+        /* Glowing Effect for elements */
+        .glow-pink {
+            box-shadow: 0 0 15px var(--pink-accent), 0 0 30px var(--pink-accent), 0 0 45px var(--pink-accent);
+        }
+
+        .glow-navy-blue {
+            box-shadow: 0 0 15px var(--navy-blue-accent), 0 0 30px var(--navy-blue-accent), 0 0 45px var(--navy-blue-accent);
+        }
+
+        /* Text gradient glow */
+        .glow-text-gradient {
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5), 0 0 20px rgba(0, 0, 128, 0.5);
+        }
+
+        /* Initial state for scroll animations (hidden, translated) */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        /* State when element is visible (triggered by Intersection Observer) */
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typed Text Cursor blinking animation */
+        .typed-cursor {
+            opacity: 1;
+            animation: blink 1s infinite;
+            display: inline-block; /* Ensure cursor is on the same line as text */
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Background blob animations */
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+        .animate-blob {
+            animation: blob 7s infinite cubic-bezier(0.6, 0.01, 0.2, 1);
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        /* Custom scroll indicator */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--navy-blue-accent), var(--pink-accent));
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #0000B0, #ff40a0);
+        }
+
+        /* Custom button styling */
+        .btn-custom {
+            background: linear-gradient(to right, var(--pink-accent), var(--navy-blue-accent));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px var(--pink-accent), 0 0 20px var(--navy-blue-accent);
+            color: white;
+        }
+
+        .sizee{
+            width: '200px';
+            height: '200px'; 
+            object-fit: 'cover';
+            border: '5px solid var(--navy-blue-accent)'
+        }
+        p{
+            color: #E0E0E0;
+        }
+    </style>
+</head>
+<body class="selection:bg-pink-accent selection:text-black">
+    <!-- Header -->
+    <header class="fixed-top py-3 bg-black bg-opacity-70 backdrop-filter backdrop-blur-sm shadow-lg">
+        <nav class="container-fluid d-flex justify-content-between align-items-center px-4">
+            <div class="fs-4 fw-bold text-info glow-navy-blue">My Portfolio</div>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link text-light hover-effect" href="#hero">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light hover-effect" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light hover-effect" href="#skills">Skills</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light hover-effect" href="#projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light hover-effect" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-vh-100 d-flex align-items-center justify-content-center text-center p-4 position-relative">
+        <div class="z-1 animate-on-scroll">
+            <h1 class="display-1 fw-bolder mb-3 text-white glow-text-gradient">
+                Hello, I'm <span class="text-pink-accent glow-pink">Bonny Mkuu</span>
+            </h1>
+            <p id="typed-text" class="fs-4 text-pink-accent mb-4 typed-text-container"></p>
+            <p class="fs-5 mt-4 animate-on-scroll text-pink-accent">
+                Welcome to my digital space. Explore my work and connect with me!
+            </p>
+            <!-- Your Image Placeholder -->
+            <div class="mt-5 animate-on-scroll">
+                <img
+                    src="my-image.png"
+                    alt="Your Profile"
+                    class="img-fluid rounded-circle glow-pink sizee"
+                    onerror="this.onerror=null;
+                     this.src='https://placehold.co/200x200/FF69B4/000080?text=Image+Error';"
+                />
+            </div>
+        </div>
+        <!-- Simple glowing circles for background ambiance -->
+        <div class="position-absolute top-25 start-25 w-32 h-32 bg-pink-accent rounded-circle mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-0"></div>
+        <div class="position-absolute bottom-25 end-25 w-40 h-40 bg-navy-blue-accent rounded-circle mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 px-4 container">
+        <div class="glassmorphism animate-on-scroll">
+            <h2 class="display-4 fw-bold mb-5 text-center text-info glow-navy-blue">About Me</h2>
+            <p class="fs-5 lh-lg mb-4">
+                I am a passionate <span class="text-pink-accent fw-semibold">Web Developer</span> with expertise in creating dynamic and user-friendly web applications. My journey into web development began with a fascination for how technology can solve real-world problems and enhance user experiences. I thrive on learning new technologies and pushing the boundaries of what's possible on the web.
+            </p>
+            <p class="fs-5 lh-lg">
+                Outside of coding, I enjoy <span class="text-pink-accent fw-semibold">hiking, photography, and exploring new cuisines</span>. These hobbies often inspire my creative thinking and problem-solving approaches in development. I believe in continuous growth and am always looking for exciting projects and collaborations.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-5 px-4 container">
+        <div class="glassmorphism animate-on-scroll">
+            <h2 class="display-4 fw-bold mb-5 text-center text-pink-accent glow-pink">Skills</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="p-4 rounded-3 glassmorphism animate-on-scroll glow-navy-blue/30 h-100 d-flex flex-column justify-content-between">
+                        <h3 class="fs-2 fw-semibold mb-3 text-info">Frontend</h3>
+                        <ul class="list-unstyled fs-5 mb-0">
+                            <li><i class="bi bi-code-slash me-2 text-pink-accent"></i>HTML5, CSS3 (Bootstrap)</li>
+                            <li><i class="bi bi-journal-code me-2 text-pink-accent"></i>JavaScript (ES6+)</li>
+                            <li><i class="bi bi-react me-2 text-pink-accent"></i>React.js, Vue.js</li>
+                            <li><i class="bi bi-phone me-2 text-pink-accent"></i>Responsive Design</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-4 rounded-3 glassmorphism animate-on-scroll glow-pink/30 h-100 d-flex flex-column justify-content-between">
+                        <h3 class="fs-2 fw-semibold mb-3 text-pink-accent">Backend</h3>
+                        <ul class="list-unstyled fs-5 mb-0">
+                            <li><i class="bi bi-server me-2 text-info"></i>Node.js, Express.js</li>
+                            <li><i class="bi bi-python me-2 text-info"></i>Python (Django, Flask)</li>
+                            <li><i class="bi bi-bezier2 me-2 text-info"></i>RESTful APIs</li>
+                            <li><i class="bi bi-database me-2 text-info"></i>Database (MongoDB, PostgreSQL)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-4 rounded-3 glassmorphism animate-on-scroll glow-navy-blue/30 h-100 d-flex flex-column justify-content-between">
+                        <h3 class="fs-2 fw-semibold mb-3 text-info">Tools & More</h3>
+                        <ul class="list-unstyled fs-5 mb-0">
+                            <li><i class="bi bi-git me-2 text-pink-accent"></i>Git, GitHub</li>
+                            <li><i class="bi bi-tools me-2 text-pink-accent"></i>Webpack, Babel</li>
+                            <li><i class="bi bi-palette me-2 text-pink-accent"></i>Figma, Photoshop</li>
+                            <li><i class="bi bi-lightbulb me-2 text-pink-accent"></i>Problem Solving</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-5 px-4 container">
+        <div class="glassmorphism animate-on-scroll">
+            <h2 class="display-4 fw-bold mb-5 text-center text-info glow-navy-blue">My Projects</h2>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <!-- Project 1 -->
+                <div class="col">
+                    <div class="glassmorphism p-4 h-100 animate-on-scroll glow-pink/30">
+                        <h3 class="fs-2 fw-semibold mb-3 text-pink-accent">E-commerce Platform</h3>
+                        <p class="text-secondary mb-4">A full-stack e-commerce application built with React, Node.js, and MongoDB, featuring user authentication, product management, and a secure checkout system.</p>
+                        <a href="#" class="btn btn-custom">
+                            View Project <i class="bi bi-arrow-right-short ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="col">
+                    <div class="glassmorphism p-4 h-100 animate-on-scroll glow-navy-blue/30">
+                        <h3 class="fs-2 fw-semibold mb-3 text-info">Task Management App</h3>
+                        <p class="text-secondary mb-4">A sleek task management application with real-time updates and drag-and-drop functionality, developed using Vue.js and Firebase.</p>
+                        <a href="#" class="btn btn-custom">
+                            View Project <i class="bi bi-arrow-right-short ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="col">
+                    <div class="glassmorphism p-4 h-100 animate-on-scroll glow-pink/30">
+                        <h3 class="fs-2 fw-semibold mb-3 text-pink-accent">Personal Blog Site</h3>
+                        <p class="text-secondary mb-4">A minimalist blog platform where I share my thoughts on technology and coding tips, built with Django and a custom CMS.</p>
+                        <a href="#" class="btn btn-custom">
+                            View Project <i class="bi bi-arrow-right-short ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="col">
+                    <div class="glassmorphism p-4 h-100 animate-on-scroll glow-navy-blue/30">
+                        <h3 class="fs-2 fw-semibold mb-3 text-info">Interactive Data Visualization</h3>
+                        <p class="text-secondary mb-4">An interactive web application showcasing various data visualizations using D3.js and a custom API backend.</p>
+                        <a href="#" class="btn btn-custom">
+                            View Project <i class="bi bi-arrow-right-short ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 px-4 container">
+        <div class="glassmorphism animate-on-scroll">
+            <h2 class="display-4 fw-bold mb-5 text-center text-pink-accent glow-pink">Get in Touch</h2>
+            <div class="max-w-xl mx-auto">
+                <p class="fs-5 text-center mb-4">I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
+                <form class="row g-4">
+                    <div class="col-12">
+                        <label for="name" class="form-label fs-5 text-white">Name</label>
+                        <input type="text" id="name" name="name" class="form-control form-control-lg bg-white bg-opacity-10 border border-secondary text-white placeholder-glow-navy-blue" placeholder="Your Name" />
+                    </div>
+                    <div class="col-12">
+                        <label for="email" class="form-label fs-5 text-white">Email</label>
+                        <input type="email" id="email" name="email" class="form-control form-control-lg bg-white bg-opacity-10 border border-secondary text-white placeholder-glow-navy-blue" placeholder="your.email@example.com" />
+                    </div>
+                    <div class="col-12">
+                        <label for="message" class="form-label fs-5 text-white">Message</label>
+                        <textarea id="message" name="message" rows="5" class="form-control form-control-lg bg-white bg-opacity-10 border border-secondary text-white placeholder-glow-navy-blue" placeholder="Your message here..."></textarea>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-custom btn-lg rounded-pill glow-pink">
+                            Send Message <i class="bi bi-send-fill ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 px-4 text-center text-secondary">
+        <p>&copy; 2025 Bonnyboy Mkuu. All rights reserved.</p>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="https://linkedin.com/in/boniface-nderitu-5254462b1" class="text-info hover-effect"><i class="bi bi-linkedin fs-4"></i></a>
+            <a href="https://www.github.com/bonnymkuu" class="text-info hover-effect"><i class="bi bi-github fs-4"></i></a>
+            <a href="https://www.twitter.com/boniface" class="text-info hover-effect"><i class="bi bi-twitter fs-4"></i></a>
+            <a href="https://www.facebook.com/boniface.nderitu" class="text-info hover-effect"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="https://wa.me/+254759993892" class="text-info hover-effect"><i class="bi bi-whatsapp fs-4"></i></a>
+            <a href="https://www.instagram.com/boy_mkuu" class="text-info hover-effect"><i class="bi bi-instagram fs-4"></i></a>
+            <a href="https://www.youtube.com/@crazy_genius" class="text-info hover-effect"><i class="bi bi-youtube fs-4"></i></a>
+            
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle (Popper included) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // JavaScript for Typed Text Effect
+        function typeWriter(textElementId, text, delay = 100) {
+            const element = document.getElementById(textElementId);
+            if (!element) return;
+
+            let i = 0;
+            element.innerHTML = ''; // Clear existing text
+
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, delay);
+                } else {
+                    // Add blinking cursor after typing is complete
+                    element.innerHTML += '<span class="typed-cursor">|</span>';
+                }
+            }
+            type();
+        }
+
+        // JavaScript for Scroll Animations (Intersection Observer)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero section typed text animation
+            const typedTextElement = document.getElementById('typed-text');
+            if (typedTextElement) {
+                const textToType = "A Creative Developer | Building beautiful and functional web experiences.";
+                typeWriter('typed-text', textToType, 70); // Adjust delay as needed
+            }
+
+            // Apply Intersection Observer to elements with 'animate-on-scroll' class
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            const observerOptions = {
+                root: null, // Use the viewport as the root
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, observerOptions);
+
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
