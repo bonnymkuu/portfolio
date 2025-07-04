@@ -1,0 +1,313 @@
+/* css/style.css */
+
+/* Custom CSS Variables */
+:root {
+    /* Background Colors - Darker, with a subtle pinkish-purple hue */
+    --primary-bg-start: #6655ff;   /* Deep charcoal with a hint of purple */
+    --primary-bg-end: #530363;     /* Almost black with a purple tint */
+
+    /* Glassmorphism Base - Same subtle effect, but now complementing pink */
+    --glass-bg: rgba(255, 255, 255, 0.05); /* Stays light and airy */
+    --glass-border: rgba(255, 255, 255, 0.1); /* Subtle white border */
+
+    /* Text Colors - Adapted for contrast against the new background */
+    --text-light-gray: #F0E6F0;    /* Soft off-white for main text */
+    --text-secondary-gray: #C4B8C4; /* Slightly darker for secondary text */
+
+    /* Accent Colors - The stars of the show! */
+    --accent-pink: #FF69B4;      /* Bright, vibrant Hot Pink */
+    --accent-purple: #8A2BE2;    /* A rich, deep Blue Violet */
+
+    /* Glow Colors - Derived from the new accents */
+    --glow-light-pink: rgba(255, 105, 180, 0.6); /* Soft pink glow */
+    --glow-light-purple: rgba(138, 43, 226, 0.6); /* Soft purple glow */
+
+    /* Text Shadow/Glow - Enhanced with the new accent colors */
+    --text-shadow-strong: 0 0 12px var(--accent-pink), 0 0 25px rgba(255, 105, 180, 0.5); /* Stronger pink glow for headings */
+    --text-shadow-subtle: 0 0 7px rgba(138, 43, 226, 0.5); /* Subtle purple glow for accents */
+}
+
+/* --- Base Styles --- */
+body {
+    font-family: 'Inter', sans-serif;
+    /* Clean, deep blue gradient */
+    background: linear-gradient(135deg, var(--primary-bg-start) 0%, var(--primary-bg-end) 100%);
+    color: var(--text-light-gray);
+    overflow-x: hidden;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    line-height: 1.7; /* Improved readability */
+}
+
+/* Text Selection Styles */
+::selection {
+    background: var(--accent-green);
+    color: var(--primary-bg-end);
+}
+
+/* Custom Text Colors */
+.text-accent-blue { color: var(--accent-blue) !important; }
+.text-accent-green { color: var(--accent-green) !important; }
+.text-light-gray { color: var(--text-light-gray) !important; }
+.text-light-blue { color: var(--accent-blue) !important; } /* Alias for specific use */
+.text-secondary { color: var(--text-secondary-gray) !important; } /* For project descriptions */
+
+
+/* --- Global Effects --- */
+
+/* Glassmorphism Effect */
+.glassmorphism {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px); /* Increased blur for smoother effect */
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem; /* More rounded */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Softer, more diffuse shadow */
+    padding: 2.5rem; /* More padding */
+    transition: transform 0.4s ease-out, box-shadow 0.4s ease-out; /* Smooth transition for hover */
+}
+
+/* Heading & Custom Text Shadow/Glow */
+.main-heading-glow {
+    text-shadow: var(--text-shadow-strong);
+}
+.custom-text-shadow {
+    text-shadow: var(--text-shadow-subtle);
+}
+.custom-logo-text {
+    text-shadow: 0 0 8px rgba(90, 103, 216, 0.7);
+}
+
+
+/* --- Header & Navigation --- */
+header {
+    z-index: 1000; /* Ensure header stays on top */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+}
+.nav-hover-effect {
+    position: relative;
+    transition: color 0.3s ease;
+}
+.nav-hover-effect::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-green); /* Accent color for hover underline */
+    transition: width 0.3s ease-out;
+}
+.nav-hover-effect:hover {
+    color: var(--accent-green) !important;
+}
+.nav-hover-effect:hover::after {
+    width: 80%; /* Slightly shorter underline */
+}
+
+/* --- Hero Section Elements --- */
+.profile-img {
+    width: 400px; 
+    height: 500px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 6px solid var(--accent-blue); /* Richer border */
+    box-shadow: 0 0 25px var(--glow-light-blue), 0 0 50px rgba(90, 103, 216, 0.4); /* Softer, wider glow */
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+.profile-img:hover {
+    transform: scale(1.03) rotate(2deg); /* Subtle rotate on hover */
+    box-shadow: 0 0 35px var(--glow-light-green), 0 0 70px rgba(104, 211, 145, 0.4); /* Shift to green glow */
+}
+
+/* Typed Text Cursor blinking animation */
+.typed-cursor {
+    opacity: 1;
+    animation: blink 1s infinite steps(1); /* Smooth blink */
+    display: inline-block;
+    color: var(--accent-green); /* Green cursor */
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Background blob animations */
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(calc(var(--blob-x-offset) * 1px), calc(var(--blob-y-offset) * 1px)) scale(1.05); }
+    66% { transform: translate(calc(var(--blob-x-offset) * -0.8px), calc(var(--blob-y-offset) * 0.8px)) scale(0.95); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.background-blob {
+    animation: blob 15s infinite ease-in-out; /* Slower, smoother, more controlled */
+    filter: blur(50px); /* Even more blur */
+    opacity: 0.2; /* More subtle */
+    --blob-x-offset: 30; /* Default offsets, randomized by JS */
+    --blob-y-offset: -50;
+    will-change: transform; /* Optimize for animation */
+}
+.blob-light-blue { background-color: var(--accent-blue); }
+.blob-light-green { background-color: var(--accent-green); }
+
+/* --- Section Card Hover Effects --- */
+.card-glow-on-hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Base shadow */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.card-glow-on-hover:hover {
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 20px var(--glow-light-blue); /* Enhanced shadow with blue glow */
+}
+/* Alternate glow for some cards for visual interest */
+.card-glow-on-hover:nth-child(even):hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 20px var(--glow-light-green); /* Green glow */
+}
+
+/* Project Images */
+.project-img {
+    height: 180px; /* Fixed height for consistency */
+    object-fit: cover;
+    border-radius: 0.75rem; /* Match card radius */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-out;
+}
+.project-img:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+}
+
+
+/* --- Custom Buttons --- */
+.btn-primary-custom { /* For main project actions */
+    background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+    color: white;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: 0.75rem; /* More rounded */
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.btn-primary-custom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+    transition: left 0.5s ease-out;
+    z-index: -1;
+}
+.btn-primary-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-light-blue); /* Soft blue glow */
+    color: white; /* Ensure text remains white */
+}
+.btn-primary-custom:hover::before {
+    left: 100%; /* Swipe effect */
+}
+
+.btn-secondary-custom { /* For send message */
+    background: linear-gradient(to right, var(--accent-green), var(--accent-blue)); /* Reversed gradient */
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 2rem; /* Pill shape */
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.btn-secondary-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-light-green); /* Soft green glow */
+    color: white;
+}
+
+/* --- Form Input Styling --- */
+.glass-input {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-light-gray) !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-input::placeholder {
+    color: var(--text-secondary-gray) !important;
+    opacity: 0.7;
+}
+.glass-input:focus {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 0.2rem rgba(90, 103, 216, 0.3) !important; /* Blue focus glow */
+    background-color: rgba(255, 255, 255, 0.08) !important; /* Slightly more opaque on focus */
+}
+
+
+/* --- Scrollbar Styling --- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--primary-bg-end);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--accent-blue), var(--accent-green));
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #4A5CD0, #58C381);
+}
+
+/* --- Footer --- */
+footer a {
+    color: var(--text-light-gray);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+footer a:hover {
+    color: var(--accent-green) !important;
+    transform: translateY(-3px) scale(1.1);
+}
+
+
+.navbar-toggler-icon {
+    /* This SVG creates the three lines of the hamburger icon. */
+    /* The fill color is changed to a light color (white or light-gray). */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Also, ensure the toggler button itself has a clear background/border on hover/focus */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.2) !important; /* Lighter border */
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem var(--accent-blue) !important; /* Custom focus ring */
+}
+
+/* Style for mobile menu links when expanded */
+.navbar-collapse {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-top: 0.5rem; /* Space below toggler */
+}
+
+.navbar-nav .nav-item .nav-link {
+    padding-left: 1rem; /* Indent links slightly */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separator between links */
+}
+
+.navbar-nav .nav-item:last-child .nav-link {
+    border-bottom: none; /* No border on the last link */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: var(--accent-green) !important;
+    transform: translateX(5px); /* Slight movement on hover */
+}
